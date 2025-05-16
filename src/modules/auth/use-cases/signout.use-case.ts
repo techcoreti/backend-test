@@ -1,4 +1,4 @@
-import { ISignOutRequest } from '@/domain/commons/interfaces/auth.interface';
+import { ISignOutRequest } from '@/domain/interfaces/commons/auth.interface';
 import { IAuthRepository } from '@/domain/interfaces/repositories/auth.repository';
 import { ISignOutUseCase } from '@/domain/interfaces/use-cases/auth/signout.user.use-case';
 import { Inject, Injectable } from '@nestjs/common';
@@ -16,7 +16,6 @@ export class SignOutUseCase implements ISignOutUseCase {
    */
   async execute(data: ISignOutRequest): Promise<void> {
     try {
-      // Desloga o usuário
       await this.authRepository.signOut(data);
     } catch (e) {
       throw e;

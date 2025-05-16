@@ -1,5 +1,5 @@
 import { CryptService } from '@/commons/utils/encrypt.utils';
-import { ISignInResponse } from '@/domain/commons/interfaces/auth.interface';
+import { ISignInResponse } from '@/domain/interfaces/commons/auth.interface';
 import { ViewUserDto } from '@/modules/user/api/dtos/view.user.dto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';

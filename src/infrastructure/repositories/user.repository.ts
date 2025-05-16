@@ -23,22 +23,25 @@ export class UserRepository implements IUserRepository {
         data: [user],
         totalRecords: 1,
       };
-    } catch (error) {
-      this.logger.error('Error creating user', error);
+    } catch (e) {
+      this.logger.warn(this.createUser.name, e);
+      throw new Error('Erro ao cadastrar o usuário.');
     }
   }
   async updateUser(id: string, data: IUpdateUser): Promise<void> {
     try {
       await this.userRepository.update({ id }, data);
-    } catch (error) {
-      this.logger.error('Error updating user', error);
+    } catch (e) {
+      this.logger.warn(this.updateUser.name, e);
+      throw new Error('Erro ao atualizar o usuário.');
     }
   }
   async deleteUser(id: string): Promise<void> {
     try {
       await this.userRepository.softDelete(id);
-    } catch (error) {
-      this.logger.error('Error deleting user', error);
+    } catch (e) {
+      this.logger.warn(this.deleteUser.name, e);
+      throw new Error('Erro ao excluir o usuário.');
     }
   }
   async getUserById(id: string): Promise<ResponseUserDataDto> {
@@ -50,8 +53,9 @@ export class UserRepository implements IUserRepository {
         data,
         totalRecords,
       };
-    } catch (error) {
-      this.logger.error('Error getting user by id', error);
+    } catch (e) {
+      this.logger.warn(this.getUserById.name, e);
+      throw new Error('Erro ao obter o cadastro do usuário.');
     }
   }
   async getUsers(): Promise<ResponseUserDataDto> {
@@ -61,8 +65,9 @@ export class UserRepository implements IUserRepository {
         data,
         totalRecords,
       };
-    } catch (error) {
-      this.logger.error('Error deleting user', error);
+    } catch (e) {
+      this.logger.warn(this.getUsers.name, e);
+      throw new Error('Erro ao listar os usuário.');
     }
   }
 }

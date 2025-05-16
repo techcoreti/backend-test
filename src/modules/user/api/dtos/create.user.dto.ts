@@ -1,4 +1,4 @@
-import { ProfileUserEnum } from '@/domain/commons/enum/profile.user.enum';
+import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { ICreateUser } from '@/domain/types/user';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';

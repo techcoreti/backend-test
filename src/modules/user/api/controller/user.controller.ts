@@ -6,6 +6,7 @@ import {
   IUpdateUseCase,
 } from '@/domain/interfaces/use-cases/user/user.use-case';
 import { JwtGuard } from '@/modules/auth/jwt.auth.guard';
+import { ParamsRequestDTO } from '@/modules/commons/dtos/params.request.dto';
 import { ResponseUserDataDto } from '@/modules/commons/dtos/response.user.data.dto';
 import {
   Body,
@@ -18,16 +19,26 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiInternalServerErrorResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { CreateUserUseCase } from '../../use-cases/create.user.use-case';
 import { DeleteUserUseCase } from '../../use-cases/delete.user.use-case';
 import { UpdateUserUseCase } from '../../use-cases/update.user.use-case';
 import { CreateUserDto } from '../dtos/create.user.dto';
 import { UpdateUserDto } from '../dtos/update.user.dto';
 
-@ApiTags('Users')
+@ApiTags('Usuários')
 @Controller('users')
 @UseGuards(JwtGuard)
+@ApiBearerAuth()
+@ApiInternalServerErrorResponse({ description: 'Erro interno do servidor' })
+@ApiUnauthorizedResponse({ description: 'Usuário não autorizado.' })
 export class UserController {
   constructor(
     @Inject(ICreateUserUseCase)
@@ -44,49 +55,51 @@ export class UserController {
 
   @Post()
   @ApiOperation({
-    summary: 'Register a new user',
-    description:
-      'This endpoint allows you to register a new user in the system.',
+    summary: 'Registrar um novo usuário',
+    description: 'Este endpoint permite registrar um novo usuário no sistema.',
   })
+  @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
   createUser(@Body() data: CreateUserDto): Promise<ResponseUserDataDto> {
     return this.createUserUseCase.execute(data);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: 'Change user profile',
+    summary: 'Alterar perfil do usuário',
     description:
-      'This endpoint allows you to change the profile of a user in the system.',
+      'Este endpoint permite alterar o perfil de um usuário no sistema.',
   })
+  @ApiResponse({ status: 200, description: 'Cadastro atualizado com sucesso.' })
   updateUser(@Param('id') id: string, @Body() data: UpdateUserDto) {
     return this.updateUserUseCase.execute(id, data);
   }
 
   @Delete(':id')
   @ApiOperation({
-    summary: 'Delete a user',
-    description: 'This endpoint allows you to delete a user from the system.',
+    summary: 'Excluir um usuário',
+    description: 'Este endpoint permite excluir um usuário do sistema.',
   })
-  deleteUser(@Param('id') id: string) {
+  @ApiResponse({ status: 200, description: 'Cadastro excluido com sucesso.' })
+  deleteUser(@Param() { id }: ParamsRequestDTO) {
     return this.deleteUserUseCase.execute(id);
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Register a new user',
-    description:
-      'This endpoint allows you to register a new user in the system.',
+    summary: 'Obter usuário por ID',
+    description: 'Este endpoint permite obter os dados de um usuário pelo ID.',
   })
-  getUserById(@Param('id') id: string): Promise<ResponseUserDataDto> {
+  @ApiResponse({ status: 200, type: ResponseUserDataDto })
+  getUserById(@Param() { id }: ParamsRequestDTO): Promise<ResponseUserDataDto> {
     return this.getUserByIdUseCase.execute(id);
   }
 
   @Get()
   @ApiOperation({
-    summary: 'Register a new user',
-    description:
-      'This endpoint allows you to register a new user in the system.',
+    summary: 'Listar usuários',
+    description: 'Este endpoint permite listar todos os usuários do sistema.',
   })
+  @ApiResponse({ status: 200, type: ResponseUserDataDto })
   getUsers(): Promise<ResponseUserDataDto> {
     return this.getUserUseCase.execute();
   }

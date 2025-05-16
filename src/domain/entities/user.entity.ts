@@ -1,9 +1,16 @@
-import { Column, Entity } from 'typeorm';
-import { ProfileUserEnum } from '../commons/enum/profile.user.enum';
+import { Column, DeleteDateColumn, Entity } from 'typeorm';
+import { ProfileUserEnum } from '../shareds/enum/profile.user.enum';
 import { BaseEntity } from './commons/base.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
+  @DeleteDateColumn({
+    name: 'deleted_at',
+    type: 'timestamp',
+    nullable: true,
+  })
+  deletedAt: Date;
+
   @Column({
     type: 'varchar',
     length: 255,

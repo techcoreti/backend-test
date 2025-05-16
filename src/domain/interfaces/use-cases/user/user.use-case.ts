@@ -1,4 +1,4 @@
-import { IResponseData } from '@/domain/commons/dtos/response.data';
+import { IResponseData } from '@/domain/interfaces/commons/response.data';
 import { ICreateUser, IUpdateUser, IViewUser } from '@/domain/types/user';
 
 export interface ICreateUserUseCase {

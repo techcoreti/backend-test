@@ -1,35 +1,44 @@
-import { ProfileUserEnum } from '@/domain/commons/enum/profile.user.enum';
+import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { IUpdateUser } from '@/domain/types/user';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
+import { Exclude } from 'class-transformer';
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class UpdateUserDto implements IUpdateUser {
+  @ApiProperty({
+    description: 'Nome do usuário',
+    example: 'João Silva',
+  })
+  @IsOptional()
+  @IsNotEmpty()
   name: string;
+
+  @Exclude()
   username: string;
+
+  @ApiProperty({
+    description: 'Senha do usuário',
+    example: 'senhaSegura123',
+  })
+  @IsOptional()
+  @IsNotEmpty()
   password: string;
 
   @ApiProperty({
-    description: 'Email of the user',
-    example: 'jondue@email.com',
+    description: 'Email do usuário',
+    example: 'joaosilva@email.com',
   })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
   @ApiProperty({
-    description: 'Email of the user',
-    example: 'jondue@email.com',
-  })
-  @IsEmail()
-  @IsNotEmpty()
-  prof: string;
-
-  @ApiProperty({
-    description: 'Type profile of the user',
+    description: 'Perfil do usuário',
     example: ProfileUserEnum.USER,
     enum: ProfileUserEnum,
   })
   @IsEnum(ProfileUserEnum)
+  @IsOptional()
   @IsNotEmpty()
   profile: ProfileUserEnum;
 }

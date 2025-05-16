@@ -1,4 +1,4 @@
-import { ISignInResponse } from '@/domain/commons/interfaces/auth.interface';
+import { ISignInResponse } from '@/domain/interfaces/commons/auth.interface';
 
 export interface ISignInRefreshTokenUseCase {
   execute(userId: string, token: string): Promise<ISignInResponse>;

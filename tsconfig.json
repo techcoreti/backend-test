@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "allowJs": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -21,8 +22,8 @@
     "noUnusedParameters": true,
     "paths": {
       "@/*": ["src/*"],
-      "@src/*": ["src/*"],
-      "@src/domain*": ["src/domain*"]
+      "@/domain/*": ["src/domain/*"],
+      "@/modules/*": ["src/modules/*"]
     }
   },
   "include": ["src/**/*"]

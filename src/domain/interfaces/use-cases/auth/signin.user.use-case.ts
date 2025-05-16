@@ -1,7 +1,7 @@
 import {
   ISignInRequest,
   ISignInResponse,
-} from '@/domain/commons/interfaces/auth.interface';
+} from '@/domain/interfaces/commons/auth.interface';
 
 export interface ISignInUseCase {
   execute(data: ISignInRequest): Promise<ISignInResponse>;

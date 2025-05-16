@@ -1,11 +1,12 @@
-import { IResponseData } from '@/domain/commons/dtos/response.data';
 import {
   ISignInRequest,
   ISignInResponse,
   ISignOutRequest,
-} from '@/domain/commons/interfaces/auth.interface';
+} from '@/domain/interfaces/commons/auth.interface';
+import { IResponseData } from '@/domain/interfaces/commons/response.data';
 import { IViewAuth } from '@/domain/types/auth';
 import { IViewUser } from '@/domain/types/user';
+import { IQueryRequest } from '../commons/query.request';
 
 export interface IAuthRepository {
   signIn(data: ISignInRequest): Promise<IViewUser>;
@@ -14,7 +15,7 @@ export interface IAuthRepository {
   storeAuth(data: IViewUser, auth: ISignInResponse): Promise<any>;
   signInRefresh(userId: string): Promise<IViewUser>;
   isLogged(id: string): Promise<any>;
-  signInHistory(query: any): Promise<IResponseData<IViewAuth>>;
+  signInHistory(query: IQueryRequest): Promise<IResponseData<IViewAuth>>;
 }
 
 export const IAuthRepository = Symbol('IAuthRepository');

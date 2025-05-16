@@ -1,4 +1,4 @@
-import { ISignOutRequest } from '@/domain/commons/interfaces/auth.interface';
+import { ISignOutRequest } from '@/domain/interfaces/commons/auth.interface';
 
 export interface ISignOutUseCase {
   execute(data: ISignOutRequest): Promise<void>;

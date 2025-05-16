@@ -84,7 +84,6 @@ export class JwtAuhtRefresh extends PassportStrategy(
       // Verifica se o usuário está logado com o token informado
       await this.authRepository.isLogged(value.sub);
 
-      // Retorna os dados do usuário
       return {
         profile: value.profile,
         userId: value.sub,

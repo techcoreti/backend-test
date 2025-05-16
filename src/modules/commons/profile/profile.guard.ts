@@ -10,7 +10,10 @@ export class ProfileGuard implements CanActivate {
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const profile = this.reflector.get<string[]>('profile', context.getHandler());
+    const profile = this.reflector.get<string[]>(
+      'profile',
+      context.getHandler(),
+    );
     if (!profile) return false;
 
     const request = context.switchToHttp().getRequest();

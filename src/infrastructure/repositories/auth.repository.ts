@@ -1,12 +1,13 @@
 import { CryptService } from '@/commons/utils/encrypt.utils';
+import { AuthEntity } from '@/domain/entities/auth.entity';
+import { UserEntity } from '@/domain/entities/user.entity';
 import {
   ISignInRequest,
   ISignOutRequest,
-} from '@/domain/commons/interfaces/auth.interface';
-import { AuthEntity } from '@/domain/entities/auth.entity';
-import { UserEntity } from '@/domain/entities/user.entity';
+} from '@/domain/interfaces/commons/auth.interface';
 import { IAuthRepository } from '@/domain/interfaces/repositories/auth.repository';
 import { SignInResponseDto } from '@/modules/auth/api/dtos/signIn.response.dto';
+import { QueryRequestDTO } from '@/modules/commons/dtos/query.request.dto';
 import { ResponseAuthDataDto } from '@/modules/commons/dtos/response.auth.data.dto';
 import { ViewUserDto } from '@/modules/user/api/dtos/view.user.dto';
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
@@ -169,9 +170,15 @@ export class AuthRepository implements IAuthRepository {
    * @throws - Lança uma exceção se ocorrer um erro ao buscar o histórico de logins
    * @param query - Query para buscar o histórico de logins
    */
-  async signInHistory(): Promise<ResponseAuthDataDto> {
+  async signInHistory(query: QueryRequestDTO): Promise<ResponseAuthDataDto> {
+    const order: any = {
+      [query.orderBy]: query.order,
+    };
     try {
       const [data, totalRecords] = await this.authRepository.findAndCount({
+        take: query.size,
+        skip: (query.page - 1) * query.size,
+        order,
         relations: ['user'],
       });
       return {

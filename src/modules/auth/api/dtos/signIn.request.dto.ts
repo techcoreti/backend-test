@@ -1,19 +1,21 @@
-import { ISignInRequest } from '@/domain/commons/interfaces/auth.interface';
+import { ISignInRequest } from '@/domain/interfaces/commons/auth.interface';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class SignInRequestDto implements ISignInRequest {
   @ApiProperty({
-    description: 'The email of the user',
-    example: 'user@example.com',
+    description: 'Email do usuário',
+    example: 'usuario@exemplo.com',
+    type: String,
   })
   @IsNotEmpty()
   @IsEmail()
   username: string;
 
   @ApiProperty({
-    description: 'The password of the user',
+    description: 'Senha do usuário',
     example: '123456',
+    type: String,
   })
   @IsNotEmpty()
   @IsString()

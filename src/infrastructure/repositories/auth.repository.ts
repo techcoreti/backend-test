@@ -37,7 +37,6 @@ export class AuthRepository implements IAuthRepository {
    */
   async signIn(data: ISignInRequest): Promise<ViewUserDto> {
     try {
-      // Verifica se o usuário existe
       const userData = await this.userRepository.findOne({
         where: { username: data.username, isActive: true },
       });
@@ -46,7 +45,6 @@ export class AuthRepository implements IAuthRepository {
         throw new UnauthorizedException('Usuário não encontrado.');
       }
 
-      // Faz a comparação da senha fornecida com a senha armazenada
       const passIsValid = await this.cryptoService.passwordValidate(
         data.password,
         userData.password,
@@ -56,7 +54,6 @@ export class AuthRepository implements IAuthRepository {
         throw new UnauthorizedException('Senha incorreta.');
       }
 
-      // Retorna os dados do usuário para gerar o token
       return userData;
     } catch (e) {
       if (e instanceof UnauthorizedException) {
@@ -102,7 +99,6 @@ export class AuthRepository implements IAuthRepository {
    */
   async signInRefresh(userId: string): Promise<ViewUserDto> {
     try {
-      // Verifica se o usuário existe e está logado
       const userData = await this.userRepository.findOne({
         where: { id: userId, isActive: true },
       });
@@ -130,13 +126,11 @@ export class AuthRepository implements IAuthRepository {
    */
   async storeAuth(data: ViewUserDto, auth: SignInResponseDto): Promise<any> {
     try {
-      // Invalida o login anterior do usuário
       await this.authRepository.update(
         { userId: data.id, isLogged: true },
         { isLogged: false },
       );
 
-      // Armazena os dados do novo login
       await this.authRepository.save({
         userId: data.id,
         token: auth.tokenJwt,

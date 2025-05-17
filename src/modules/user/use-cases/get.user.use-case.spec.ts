@@ -1,3 +1,4 @@
+import { IQueryRequest } from '@/domain/interfaces/commons/query.request';
 import { IUserRepository } from '@/domain/interfaces/repositories/user.repository';
 import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { ResponseUserDataDto } from '@/modules/commons/dtos/response.user.data.dto';
@@ -6,6 +7,7 @@ import { GetUserUseCase } from './get.user.use-case';
 describe('GetUserUseCase', () => {
   let getUserUseCase: GetUserUseCase;
   let userRepository: jest.Mocked<IUserRepository>;
+  let query: IQueryRequest;
 
   beforeEach(() => {
     userRepository = {
@@ -36,7 +38,7 @@ describe('GetUserUseCase', () => {
 
     userRepository.getUsers.mockResolvedValue(userData);
 
-    const result = await getUserUseCase.execute();
+    const result = await getUserUseCase.execute(query);
 
     expect(result).toEqual(userData);
     expect(userRepository.getUsers).toHaveBeenCalledTimes(1);
@@ -47,7 +49,7 @@ describe('GetUserUseCase', () => {
 
     userRepository.getUsers.mockRejectedValue(error);
 
-    await expect(getUserUseCase.execute()).rejects.toThrow(error);
+    await expect(getUserUseCase.execute(query)).rejects.toThrow(error);
     expect(userRepository.getUsers).toHaveBeenCalledTimes(1);
   });
 });

@@ -2,13 +2,12 @@ import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { IViewUser } from '@/domain/types/user';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-
-@Expose()
 export class ViewUserDto implements IViewUser {
   @ApiProperty({
     description: 'Nome do usuário',
     example: 'João Silva',
   })
+  @Expose()
   name: string;
 
   @ApiProperty({

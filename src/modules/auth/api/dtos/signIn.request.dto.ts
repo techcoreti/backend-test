@@ -5,7 +5,7 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class SignInRequestDto implements ISignInRequest {
   @ApiProperty({
     description: 'Email do usuário',
-    example: 'usuario@exemplo.com',
+    example: 'user@example.com',
     type: String,
   })
   @IsNotEmpty()

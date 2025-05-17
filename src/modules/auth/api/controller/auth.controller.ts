@@ -5,6 +5,7 @@ import { ISignOutUseCase } from '@/domain/interfaces/use-cases/auth/signout.user
 import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { QueryRequestDTO } from '@/modules/commons/dtos/query.request.dto';
 import { ResponseAuthDataDto } from '@/modules/commons/dtos/response.auth.data.dto';
+import { Profiles } from '@/modules/commons/profile/profile.decorator';
 import {
   Body,
   Controller,
@@ -19,6 +20,7 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
@@ -26,7 +28,6 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { Profile } from '../../../commons/profile/profile.decorator';
 import { ProfileGuard } from '../../../commons/profile/profile.guard';
 import { JwtGuard, JwtRefreshGuard } from '../../jwt.auth.guard';
 import { SignInRequestDto } from '../dtos/signIn.request.dto';
@@ -37,6 +38,9 @@ import { SignInResponseDto } from '../dtos/signIn.response.dto';
 @ApiInternalServerErrorResponse({ description: 'Erro interno do servidor' })
 @ApiUnauthorizedResponse({ description: 'Usuário não autorizado' })
 @ApiOkResponse({ description: 'Requisição bem-sucedida' })
+@ApiForbiddenResponse({
+  description: 'Acesso negado. Usuário não autorizado.',
+})
 export class AuthController {
   constructor(
     @Inject(ISignInUseCase)
@@ -110,7 +114,7 @@ export class AuthController {
   })
   @ApiResponse({ status: 200, type: ResponseAuthDataDto })
   @UseGuards(JwtGuard, ProfileGuard)
-  @Profile(ProfileUserEnum.ADMIN)
+  @Profiles(ProfileUserEnum.ADMIN)
   async signInHistory(
     @Query() query: QueryRequestDTO,
   ): Promise<ResponseAuthDataDto> {

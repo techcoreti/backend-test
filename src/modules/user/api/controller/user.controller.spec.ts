@@ -1,3 +1,4 @@
+import { IQueryRequest } from '@/domain/interfaces/commons/query.request';
 import {
   ICreateUserUseCase,
   IDeleteUserUseCase,
@@ -21,6 +22,7 @@ describe('UserController', () => {
   let updateUserUseCase: IUpdateUserUseCase;
   let getUserByIdUseCase: IGetUserByIdUseCase;
   let getUserUseCase: IGetUserUseCase;
+  let query: IQueryRequest;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -113,7 +115,7 @@ describe('UserController', () => {
 
       jest.spyOn(getUserUseCase, 'execute').mockResolvedValue(result);
 
-      expect(await userController.getUsers()).toEqual(result);
+      expect(await userController.getUsers(query)).toEqual(result);
       expect(getUserUseCase.execute).toHaveBeenCalled();
     });
   });

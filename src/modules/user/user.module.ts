@@ -1,3 +1,4 @@
+import { CryptService } from '@/commons/utils/encrypt.utils';
 import { UserEntity } from '@/domain/entities/user.entity';
 import { IUserRepository } from '@/domain/interfaces/repositories/user.repository';
 import {
@@ -22,6 +23,7 @@ import { UpdateUserUseCase } from './use-cases/update.user.use-case';
   controllers: [UserController],
   providers: [
     Logger,
+    CryptService,
     {
       provide: IUpdateUseCase,
       useClass: UpdateUserUseCase,

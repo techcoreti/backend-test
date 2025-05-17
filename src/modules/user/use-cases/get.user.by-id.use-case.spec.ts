@@ -1,6 +1,7 @@
 import { IUserRepository } from '@/domain/interfaces/repositories/user.repository';
 import { ProfileUserEnum } from '@/domain/shareds/enum/profile.user.enum';
 import { ResponseUserDataDto } from '@/modules/commons/dtos/response.user.data.dto';
+import { ViewUserDto } from '../api/dtos/view.user.dto';
 import { GetUserByIdUseCase } from './get.user.by-id.use-case';
 
 describe('GetUserByIdUseCase', () => {
@@ -29,8 +30,7 @@ describe('GetUserByIdUseCase', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
-          password: 'password123',
-        },
+        } as ViewUserDto,
       ],
       totalRecords: 1,
     };

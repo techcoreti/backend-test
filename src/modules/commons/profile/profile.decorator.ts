@@ -1,3 +1,3 @@
-import { SetMetadata } from "@nestjs/common";
+import { SetMetadata } from '@nestjs/common';
 
-export const Profile = ( ...args: string[]) => SetMetadata('profile', args)
+export const Profiles = (...args: string[]) => SetMetadata('profile', args);

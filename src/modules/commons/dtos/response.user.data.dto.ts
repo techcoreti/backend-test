@@ -2,7 +2,6 @@ import { IResponseData } from '@/domain/interfaces/commons/response.data';
 import { IViewUser } from '@/domain/types/user';
 import { ViewUserDto } from '@/modules/user/api/dtos/view.user.dto';
 import { ApiProperty } from '@nestjs/swagger';
-
 export class ResponseUserDataDto implements IResponseData<IViewUser> {
   @ApiProperty({
     description: 'Lista de dados de usuários',
@@ -21,7 +20,7 @@ export class ResponseUserDataDto implements IResponseData<IViewUser> {
       },
     ],
   })
-  data: IViewUser[];
+  data: ViewUserDto[];
 
   @ApiProperty({
     description: 'Total de registros encontrados',

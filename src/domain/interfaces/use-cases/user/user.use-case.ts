@@ -1,5 +1,6 @@
 import { IResponseData } from '@/domain/interfaces/commons/response.data';
 import { ICreateUser, IUpdateUser, IViewUser } from '@/domain/types/user';
+import { IQueryRequest } from '../../commons/query.request';
 
 export interface ICreateUserUseCase {
   execute(data: ICreateUser): Promise<IResponseData<IViewUser>>;
@@ -17,7 +18,7 @@ export interface IGetUserByIdUseCase {
   execute(id: string): Promise<IResponseData<IViewUser>>;
 }
 export interface IGetUserUseCase {
-  execute(): Promise<IResponseData<IViewUser>>;
+  execute(query: IQueryRequest): Promise<IResponseData<IViewUser>>;
 }
 
 export const ICreateUserUseCase = Symbol('ICreateUserUseCase');

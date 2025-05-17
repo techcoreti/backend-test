@@ -20,7 +20,7 @@ const datasourceMigrations = async (): Promise<DataSource> => {
   return new DataSource({
     ...databaseConfig,
     ssl: false,
-    migrations: ['dist/infrastructure/database/migrations/*.{js,ts}'],
+    migrations: ['dist/infrastructure/database/migrations/**/*.{js,ts}'],
     entities: ['src/domain/entities/**/*.entity{.ts,.js}'],
     synchronize: false,
   } as DataSourceOptions);
